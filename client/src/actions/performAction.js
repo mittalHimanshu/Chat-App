@@ -1,6 +1,5 @@
 import { 
-    GET_MESSAGES, 
-    SEND_MESSAGE, 
+    SET_CONNECTED_USERS, 
     GET_USER, 
     GET_MESSAGE,
     SET_SOCKET 
@@ -23,6 +22,13 @@ export const setMessages = payload => {
 export const setSocket = payload => {
     return{
         type: SET_SOCKET,
+        payload
+    }
+}
+
+export const setConnecedUsers = payload => {
+    return{
+        type: SET_CONNECTED_USERS,
         payload
     }
 }

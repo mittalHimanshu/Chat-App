@@ -5,12 +5,12 @@ import { connect } from 'react-redux'
 class Sidebar extends Component {
 
   displayCurrentUsers = () => {
-    const { currentUsers } = this.props.details
+    const { connectedUsers } = this.props.details
     return (
-      currentUsers.map(user =>
+      connectedUsers.map(user =>
         <li key={uuid()} className="nav-item" style={{ fontSize: '19px' }}>
           <a className="nav-link">
-            {user.name}
+            {user.username}
             {user.isTyping ?
               <p style={{ color: '#373738', fontSize: '12px', textAlign: 'right', fontStyle: 'italic', marginTop: '-7px' }}
               >is typing........</p>

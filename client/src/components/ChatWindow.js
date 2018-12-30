@@ -10,8 +10,8 @@ class ChatWindow extends Component {
       messages.map(message =>
         <div key={uuid()} className="media text-muted pt-3">
           <p className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong className="d-block text-gray-dark">@username</strong>
-            {message}
+            <strong className="d-block text-gray-dark">{message.username}</strong>
+            {message.message}
           </p>
         </div>
       )

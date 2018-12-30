@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { setUser, setMessages, setSocket } from '../actions/performAction'
 import { connect } from 'react-redux'
 
 class Footer extends Component {
@@ -41,4 +40,4 @@ const mapStateToProps = state => (
   }
 )
 
-export default connect(mapStateToProps, { setUser, setMessages, setSocket })(Footer)
+export default connect(mapStateToProps)(Footer)
