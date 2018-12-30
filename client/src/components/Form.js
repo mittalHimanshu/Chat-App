@@ -14,8 +14,8 @@ class Form extends Component {
     socket.on('RECEIVE_MESSAGE', message => {
       this.props.setMessages(message)
     })
-    socket.on('USER_CONNECTED', user => {
-      this.props.setConnecedUsers(user)
+    socket.on('USER_CONNECTED', users => {
+      this.props.setConnecedUsers(users)
     })
 
     this.props.setSocket(socket)

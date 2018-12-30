@@ -19,13 +19,14 @@ class Sidebar extends Component {
   }
 
   render() {
+    const { connectedUsers } = this.props.details
     return (
       <nav className="col-md-2 d-md-block bg-light sidebar d-none">
         <div className="sidebar-sticky">
           <ul className="nav flex-column">
             <li className="nav-item">
               <div style={{ textAlign: 'center', fontSize: '20px', fontFamily: 'Andika' }}> Members Online
-                <span className="badge badge-info badge-pill " style={{ marginLeft: '8px' }}>4</span>
+                <span className="badge badge-info badge-pill " style={{ marginLeft: '8px' }}>{connectedUsers.length}</span>
               </div>
             </li>
             {this.displayCurrentUsers()}

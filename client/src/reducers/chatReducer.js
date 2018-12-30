@@ -46,7 +46,7 @@ export default function (state = initialState, action) {
         ...state,
         details:{
           ...state.details,
-          connectedUsers: [...state.details.connectedUsers, action.payload]
+          connectedUsers: action.payload
         }
       }
     case TYPING:

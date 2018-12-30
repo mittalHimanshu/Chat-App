@@ -27,10 +27,18 @@ export const setSocket = payload => {
     }
 }
 
-export const setConnecedUsers = payload => {
+export const setConnecedUsers = users => {
+    var conUsers = []
+    users.map(user=>{
+        const {username} = user
+        conUsers.push({
+            username,
+            isTyping: false
+        })
+    })
     return{
         type: SET_CONNECTED_USERS,
-        payload
+        payload: conUsers
     }
 }
 
