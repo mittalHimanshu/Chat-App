@@ -10,14 +10,13 @@ import Footer from './components/Footer'
 class App extends Component {
 
   render() {
-    console.log('hie')
-    const { username } = this.props.details
+    const { username, socket } = this.props.details
     if (!username)
       this.props.history.push('/')
     else {
       return (
         <div>
-          <Header username={username} />
+          <Header username={username} socket={socket}/>
           <div className="container-fluid">
             <div className="row">
               <Sidebar />

@@ -25,10 +25,11 @@ class Sidebar extends Component {
         <div className="sidebar-sticky">
           <ul className="nav flex-column">
             <li className="nav-item">
-              <div style={{ textAlign: 'center', fontSize: '20px', fontFamily: 'Andika' }}> Members Online
+              <div style={{ textAlign: 'center', fontSize: '15px', fontFamily: 'Andika', marginTop: '5px'}}> Members Online
                 <span className="badge badge-info badge-pill " style={{ marginLeft: '8px' }}>{connectedUsers.length}</span>
               </div>
             </li>
+            <hr style={{ width: '100%'}}/>
             {this.displayCurrentUsers()}
           </ul>
         </div>

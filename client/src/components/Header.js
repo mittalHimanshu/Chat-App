@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom'
 
 class Header extends Component {
+
+  handleLogout = e => {
+    this.props.socket.disconnect()
+  }
+
   render() {
     return (
       <nav className="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
@@ -9,9 +15,7 @@ class Header extends Component {
             <a className="nav-link" href="#">{this.props.username}</a>
           </li>
         </ul>
-        <form className="form-inline">
-          <button className="btn my-2 my-sm-0 btn-outline-warning" type="submit">Leave Room</button>
-        </form>
+          <Link to='/'><button className="btn my-2 my-sm-0 btn-outline-warning" onClick={this.handleLogout} type="button">Leave Room</button></Link>
       </nav>
     );
   }
