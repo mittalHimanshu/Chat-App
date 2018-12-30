@@ -11,25 +11,38 @@ class Footer extends Component {
     socket.emit('SEND_MESSAGE', {
       username, message
     })
+    socket.emit('USER_NOT_TYPING', username)
     this.message.value = ''
+  }
+
+  handleTyping = e => {
+    const { socket, username } = this.props.details
+    if (e.target.value)
+      socket.emit('USER_TYPING', username)
+    else
+      socket.emit('USER_NOT_TYPING', username)
+  }
+
+  handleSubmit = e => {
+    if(e.key==='Enter'){
+      this.submit(e)
+    }
   }
 
   render() {
     return (
-      <footer className="footer" style={{ width: '84%', right: 0 }}>
-        <div className="container">
-        </div>
-        <form style={{ position: 'fixed', width: '83%', bottom: '10px', marginLeft: '15px' }}>
-          <div className="form-row">
-            <div className="col">
-              <input ref={(input) => {this.message = input}} type="text" name='message' className="form-control" placeholder="Type Here......." />
-            </div>
-            <div style={{ width: '20%' }}>
-              <button type="submit" onClick={this.submit} className="btn btn-dark" style={{ float: 'left'}}>Send</button>
-            </div>
+      <div className="row">
+        <footer className="footer col-sm-12 col-lg-10 col-md-10 col-12" style={{ position: 'fixed', bottom: 0, right: 0, backgroundColor: '#f8f9fa', padding: '10px'}}>
+          <div className="container">
+            <span className="text-muted">
+              <div className="row">
+                  <input autoFocus onKeyPress={this.handleSubmit} onChange={this.handleTyping} ref={(input) => { this.message = input }} type="text" className="form-control col-lg-10 col-xl-10 col-md-10 col-sm-10 col-10" placeholder="Type Here......." />
+                  <button onClick={this.submit} className="btn btn-info float-right col-lg col-md col-sm col" type="submit" style={{ marginLeft: '15px' }}>Send</button>
+              </div>
+            </span>
           </div>
-        </form>
-      </footer>
+        </footer>
+      </div>
     );
   }
 }

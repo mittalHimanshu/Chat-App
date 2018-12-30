@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Form.css'
+import '../Form.css'
 import { connect } from 'react-redux'
 import { connectHandler } from '../handlers'
 import io from 'socket.io-client'
@@ -17,6 +17,7 @@ class Form extends Component {
     socket.on('USER_CONNECTED', user => {
       this.props.setConnecedUsers(user)
     })
+
     this.props.setSocket(socket)
   }
 
@@ -57,4 +58,4 @@ const mapStateToProps = state => (
   }
 )
 
-export default connect(mapStateToProps, { setUser, setConnecedUsers, setSocket, setMessages })(Form);
+export default connect(mapStateToProps, { setUser,setConnecedUsers, setSocket, setMessages })(Form);

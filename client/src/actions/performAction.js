@@ -1,5 +1,6 @@
 import { 
     SET_CONNECTED_USERS, 
+    TYPING,
     GET_USER, 
     GET_MESSAGE,
     SET_SOCKET 
@@ -30,5 +31,19 @@ export const setConnecedUsers = payload => {
     return{
         type: SET_CONNECTED_USERS,
         payload
+    }
+}
+
+export const changeConnectedUsers = (connectedUsers, username, extra=false) => {
+    connectedUsers.map(user => {
+        if(user.username === username)
+            if(extra === false)
+                user.isTyping = true
+            else
+                user.isTyping = false
+    })
+    return{
+        type: TYPING,
+        payload: connectedUsers
     }
 }

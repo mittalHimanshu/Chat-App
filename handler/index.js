@@ -7,3 +7,12 @@ module.exports.handleSendMessage = data => {
 module.exports.handleUserConnected = user => {
     io.sockets.emit('USER_CONNECTED', user)
 }
+
+module.exports.handleUserTyping = username => {
+    io.sockets.emit('USER_TYPING', username)
+}
+
+module.exports.handleUserNotTyping = username => {
+    io.sockets.emit('USER_NOT_TYPING', username)
+}
+

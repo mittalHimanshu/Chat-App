@@ -2,6 +2,7 @@ import {
   GET_USER,
   SET_CONNECTED_USERS,
   GET_MESSAGE,
+  TYPING,
   SET_SOCKET
 } from '../actions'
 
@@ -9,7 +10,7 @@ const initialState = {
   details: {
     socket: null,
     username: null,
-    messages: [{}],
+    messages: [],
     connectedUsers: []
   }
 }
@@ -46,6 +47,14 @@ export default function (state = initialState, action) {
         details:{
           ...state.details,
           connectedUsers: [...state.details.connectedUsers, action.payload]
+        }
+      }
+    case TYPING:
+      return{
+        ...state,
+        details:{
+          ...state.details,
+          connectedUsers: action.payload
         }
       }
     default:

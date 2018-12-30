@@ -7,23 +7,27 @@ import Sidebar from './components/Sidebar'
 import ChatWindow from './components/ChatWindow'
 import Footer from './components/Footer'
 
-
-
 class App extends Component {
 
   render() {
-    return (
-      <div>
-        <Header />
-        <div className="container-fluid">
-          <div className="row">
-            <Sidebar />
-            <ChatWindow />
-            <Footer />
+    console.log('hie')
+    const { username } = this.props.details
+    if (!username)
+      this.props.history.push('/')
+    else {
+      return (
+        <div>
+          <Header username={username} />
+          <div className="container-fluid">
+            <div className="row">
+              <Sidebar />
+              <ChatWindow />
+            </div>
           </div>
+          <Footer />
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
