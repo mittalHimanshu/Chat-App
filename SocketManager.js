@@ -8,13 +8,14 @@ module.exports = socket => {
     })
 
     socket.on('USER_CONNECTED', user => {
-        const {id} = socket
+        const { id } = socket
         const { username } = user
         socket.user = username
         users.push({
             username, id
         })
         io.sockets.emit('USER_CONNECTED', users)
+        io.sockets.emit('SHOW_TOAST', `${username} entered the room`)
     })
 
     socket.on('USER_TYPING', username => {
@@ -26,12 +27,14 @@ module.exports = socket => {
     })
 
     socket.on('disconnect', () => {
-        const {user} = socket
-        users.forEach( (item, index, object) => {
+        const { user } = socket
+        users.forEach((item, index, object) => {
             if (item.username === user) {
-              object.splice(index, 1);
+                object.splice(index, 1);
             }
-          });
-          io.sockets.emit('USER_CONNECTED', users)
+        });
+        io.sockets.emit('USER_CONNECTED', users)
+        if (user)
+            io.sockets.emit('SHOW_TOAST', `${user} left the room`)
     })
 }

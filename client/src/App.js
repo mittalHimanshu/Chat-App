@@ -1,33 +1,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { setUser, setMessages, setSocket } from './actions/performAction'
 import './App.css';
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import ChatWindow from './components/ChatWindow'
 import Footer from './components/Footer'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 class App extends Component {
 
+  componentWillMount() {
+    const { socket } = this.props.details
+    socket.on('SHOW_TOAST', toastData => {
+      toast.info(toastData);
+    })
+  }
+
   render() {
     const { username, socket } = this.props.details
-    if (!username)
-      this.props.history.push('/')
-    else {
-      return (
-        <div>
-          <Header username={username} socket={socket}/>
-          <div className="container-fluid">
-            <div className="row">
-              <Sidebar />
-              <ChatWindow />
-            </div>
+    return (
+      <div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange={false}
+          draggable
+          pauseOnHover={false}
+        />
+        <Header username={username} socket={socket} />
+        <div className="container-fluid">
+          <div className="row">
+            <Sidebar />
+            <ChatWindow />
           </div>
-          <Footer />
         </div>
-      );
-    }
+        <Footer />
+      </div>
+    );
   }
+
 }
 
 const mapStateToProps = state => (
@@ -36,4 +52,4 @@ const mapStateToProps = state => (
   }
 )
 
-export default connect(mapStateToProps, { setUser, setMessages, setSocket })(App)
+export default connect(mapStateToProps)(App)
