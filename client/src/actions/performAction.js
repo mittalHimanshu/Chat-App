@@ -3,7 +3,8 @@ import {
     TYPING,
     GET_USER, 
     GET_MESSAGE,
-    SET_SOCKET 
+    SET_SOCKET,
+    SET_ROOM
 } from './index'
 
 export const setUser = payload =>{
@@ -13,9 +14,18 @@ export const setUser = payload =>{
     }
 }
 
-export const setMessages = payload => {
+export const setMessages = (message, chatRoom) => {
     return{
         type: GET_MESSAGE,
+        payload:{
+            message, chatRoom
+        }
+    }
+}
+
+export const setChatRoom = payload => {
+    return{
+        type: SET_ROOM,
         payload
     }
 }

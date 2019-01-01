@@ -11,8 +11,8 @@ class Form extends Component {
   componentWillMount() {
     const socket = io(socketUrl)
     socket.on('connect', connectHandler)
-    socket.on('RECEIVE_MESSAGE', message => {
-      this.props.setMessages(message)
+    socket.on('RECEIVE_MESSAGE', (message, chatRoom) => {
+      this.props.setMessages(message, chatRoom)
     })
     socket.on('USER_CONNECTED', users => {
       this.props.setConnecedUsers(users)

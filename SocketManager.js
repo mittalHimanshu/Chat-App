@@ -1,10 +1,36 @@
 const io = require('./server')
 var users = []
+const moment = require('moment')
+
+const getChatRoomId = (a, b) => {
+    var str = `${a}${b}`
+    var arr = str.split('');
+    var sorted = arr.sort();
+    return sorted.join('');
+}
 
 module.exports = socket => {
 
+    console.log('him', socket.id)
+
     socket.on('SEND_MESSAGE', data => {
-        io.sockets.emit('RECEIVE_MESSAGE', data)
+        data[0]['timeStamp'] = moment().format('hh:mm:ss A')
+        io.sockets.emit('RECEIVE_MESSAGE', data[0], data[1])
+    })
+
+    socket.on('PRIVATE_CHAT', username => {
+        var id;
+        users.forEach((item, index, object) => {
+            if (item.username === username) {
+               id = item.id 
+            }
+        });
+
+        console.log('ag', id)
+        const chatRoomId = getChatRoomId(a=socket.id, b=id)
+        socket.emit('PRIVATE_CHAT', chatRoomId)
+        io.to(id).emit('PRIVATE_CHAT', chatRoomId)
+
     })
 
     socket.on('USER_CONNECTED', user => {

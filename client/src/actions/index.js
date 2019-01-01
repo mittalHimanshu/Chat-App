@@ -3,5 +3,6 @@ module.exports = {
     GET_USER: 'GET_USER',
     GET_MESSAGE: 'GET_MESSAGE',
     SET_SOCKET: 'SET_SOCKET',
-    TYPING: 'TYPING'
+    TYPING: 'TYPING',
+    SET_ROOM: 'SET_ROOM'
 }

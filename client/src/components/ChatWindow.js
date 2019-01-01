@@ -18,13 +18,27 @@ class ChatWindow extends Component {
   }
 
   displayMessages = () => {
+    const { chatRoom } = this.props.details
+    console.log(chatRoom)
     const { messages } = this.props.details
+    var chatMessages
+    Object.keys(messages).forEach(key => {
+      if (key === chatRoom) {
+        chatMessages = messages[key]
+      }
+    })
     return (
-      messages.map(message =>
+      chatMessages.map(message =>
         <div key={uuid()} className="media text-muted pt-3">
           <img src="http://pinegrow.com/placeholders/img15.jpg" className="mr-2 rounded" width={32} height={32} />
           <p className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-            <strong className="d-block text-gray-dark">{message.username}</strong>{message.message}
+            <strong className="d-block text-gray-dark">
+              {message.username}
+              <span style={{ position: 'absolute', left: '50%', marginLeft: '-150px', fontWeight: 'normal' }}>
+                {message.timeStamp}
+              </span>
+            </strong>
+            {message.message}
           </p>
         </div>
       )
