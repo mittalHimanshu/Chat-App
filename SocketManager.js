@@ -1,5 +1,6 @@
 const io = require('./server')
 var users = []
+var userSockets = []
 const moment = require('moment')
 
 const getChatRoomId = (a, b) => {
@@ -11,35 +12,31 @@ const getChatRoomId = (a, b) => {
 
 module.exports = socket => {
 
-    console.log('him', socket.id)
-
     socket.on('SEND_MESSAGE', data => {
         data[0]['timeStamp'] = moment().format('hh:mm:ss A')
         io.sockets.emit('RECEIVE_MESSAGE', data[0], data[1])
+        io.to(data[1]).emit('UPDATE_CHAT', data[1])
     })
-
     socket.on('PRIVATE_CHAT', username => {
-        var id;
+        var userSocket;
         users.forEach((item, index, object) => {
             if (item.username === username) {
-               id = item.id 
+               userSocket = userSockets[index] 
             }
         });
-
-        console.log('ag', id)
-        const chatRoomId = getChatRoomId(a=socket.id, b=id)
-        socket.emit('PRIVATE_CHAT', chatRoomId)
-        io.to(id).emit('PRIVATE_CHAT', chatRoomId)
-
+        const chatRoomId = getChatRoomId(a=socket.user, b=userSocket.user)
+        socket.join(chatRoomId)
+        userSocket.join(chatRoomId)
+        socket.emit('CREATE_ROOM', chatRoomId)
     })
 
     socket.on('USER_CONNECTED', user => {
-        const { id } = socket
         const { username } = user
         socket.user = username
         users.push({
-            username, id
+            username
         })
+        userSockets.push(socket)
         io.sockets.emit('USER_CONNECTED', users)
         io.sockets.emit('SHOW_TOAST', `${username} entered the room`)
     })
@@ -57,6 +54,7 @@ module.exports = socket => {
         users.forEach((item, index, object) => {
             if (item.username === user) {
                 object.splice(index, 1);
+                userSockets.splice(index, 1)
             }
         });
         io.sockets.emit('USER_CONNECTED', users)

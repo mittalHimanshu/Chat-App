@@ -3,6 +3,7 @@ import {
   SET_CONNECTED_USERS,
   GET_MESSAGE,
   TYPING,
+  UPDATE_NO,
   SET_SOCKET,
   SET_ROOM
 } from '../actions'
@@ -12,6 +13,9 @@ const initialState = {
     socket: null,
     username: null,
     connectedUsers: [],
+    newChats: {
+      'community': 0
+    },
     messages: {
       'community': []
     },
@@ -21,14 +25,30 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case SET_ROOM:
-      let chat_room = action.payload
-      let new_state = {...state}
-      new_state.details.chatRoom = chat_room 
-      new_state.details.messages[chat_room] = []
+
+    case UPDATE_NO:
+      let new_state_1 = { ...state.details }
+      new_state_1['newChats'][action.payload] += 1
       return {
         ...state,
+        details: {
+          ...new_state_1
+        }
       }
+
+    case SET_ROOM:
+      let chat_room = action.payload
+      let new_state = { ...state.details }
+      new_state['chatRoom'] = chat_room
+      new_state.messages[chat_room] = []
+      new_state.newChats[chat_room] = 0
+      return {
+        ...state,
+        details: {
+          ...new_state
+        }
+      }
+
     case GET_USER:
       return {
         ...state,
@@ -37,13 +57,16 @@ export default function (state = initialState, action) {
           username: action.payload
         }
       }
+
     case GET_MESSAGE:
-      const { message, chatRoom } = action.payload
-      let newState = {...state}
-      newState.details.messages[chatRoom].push(message)
+      var { message, chatRoom } = action.payload
+      let newState = { ...state.details }
+      if (newState.messages[chatRoom])
+        newState.messages[chatRoom].push(message)
       return {
         ...state
       }
+
     case SET_SOCKET:
       return {
         ...state,
@@ -52,6 +75,7 @@ export default function (state = initialState, action) {
           socket: action.payload
         }
       }
+
     case SET_CONNECTED_USERS:
       return {
         ...state,
@@ -60,6 +84,7 @@ export default function (state = initialState, action) {
           connectedUsers: action.payload
         }
       }
+
     case TYPING:
       return {
         ...state,
@@ -68,6 +93,7 @@ export default function (state = initialState, action) {
           connectedUsers: action.payload
         }
       }
+
     default:
       return state
   }

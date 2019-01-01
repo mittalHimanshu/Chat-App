@@ -19,7 +19,6 @@ class ChatWindow extends Component {
 
   displayMessages = () => {
     const { chatRoom } = this.props.details
-    console.log(chatRoom)
     const { messages } = this.props.details
     var chatMessages
     Object.keys(messages).forEach(key => {

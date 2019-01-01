@@ -3,7 +3,7 @@ import '../Form.css'
 import { connect } from 'react-redux'
 import { connectHandler } from '../handlers'
 import io from 'socket.io-client'
-import { setUser, setConnecedUsers, setSocket, setMessages } from '../actions/performAction'
+import { setUser,updateNoOfChats, setConnecedUsers, setSocket,setChatRoom, setMessages } from '../actions/performAction'
 const socketUrl = 'http://localhost:5000'
 
 class Form extends Component {
@@ -16,6 +16,12 @@ class Form extends Component {
     })
     socket.on('USER_CONNECTED', users => {
       this.props.setConnecedUsers(users)
+    })
+    socket.on('CREATE_ROOM', id => {
+      this.props.setChatRoom(id)
+    })
+    socket.on('UPDATE_CHAT', id => {
+      this.props.updateNoOfChats(id)
     })
     this.props.setSocket(socket)
   }
@@ -57,4 +63,4 @@ const mapStateToProps = state => (
   }
 )
 
-export default connect(mapStateToProps, { setUser,setConnecedUsers, setSocket, setMessages })(Form);
+export default connect(mapStateToProps, { setUser,updateNoOfChats, setConnecedUsers, setChatRoom, setSocket, setMessages })(Form);

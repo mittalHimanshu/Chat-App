@@ -4,12 +4,20 @@ import {
     GET_USER, 
     GET_MESSAGE,
     SET_SOCKET,
-    SET_ROOM
+    SET_ROOM,
+    UPDATE_NO
 } from './index'
 
 export const setUser = payload =>{
     return {
         type: GET_USER,
+        payload
+    }
+}
+
+export const updateNoOfChats = payload => {
+    return{
+        type: UPDATE_NO,
         payload
     }
 }
