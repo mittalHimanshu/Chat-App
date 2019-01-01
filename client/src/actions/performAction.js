@@ -5,12 +5,20 @@ import {
     GET_MESSAGE,
     SET_SOCKET,
     SET_ROOM,
-    UPDATE_NO
+    UPDATE_NO,
+    SET_CURRENT_TAB
 } from './index'
 
 export const setUser = payload =>{
     return {
         type: GET_USER,
+        payload
+    }
+}
+
+export const setCurrentTab = payload => {
+    return {
+        type: SET_CURRENT_TAB,
         payload
     }
 }
@@ -51,7 +59,8 @@ export const setConnecedUsers = users => {
         const {username} = user
         conUsers.push({
             username,
-            isTyping: false
+            isTyping: false,
+            noOfChats: 0
         })
     })
     return{

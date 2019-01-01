@@ -17,22 +17,26 @@ module.exports = socket => {
         io.sockets.emit('RECEIVE_MESSAGE', data[0], data[1])
         io.to(data[1]).emit('UPDATE_CHAT', data[1])
     })
+
     socket.on('PRIVATE_CHAT', username => {
         var userSocket;
         users.forEach((item, index, object) => {
             if (item.username === username) {
-               userSocket = userSockets[index] 
+                userSocket = userSockets[index]
             }
         });
-        const chatRoomId = getChatRoomId(a=socket.user, b=userSocket.user)
-        socket.join(chatRoomId)
-        userSocket.join(chatRoomId)
-        socket.emit('CREATE_ROOM', chatRoomId)
+        if (userSocket) {
+            const chatRoomId = getChatRoomId(a = socket.user, b = userSocket.user)
+            socket.join(chatRoomId)
+            userSocket.join(chatRoomId)
+            socket.emit('CREATE_ROOM', chatRoomId)
+        }
     })
 
     socket.on('USER_CONNECTED', user => {
         const { username } = user
         socket.user = username
+        socket.join('community')
         users.push({
             username
         })

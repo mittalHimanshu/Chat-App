@@ -5,5 +5,6 @@ module.exports = {
     SET_SOCKET: 'SET_SOCKET',
     TYPING: 'TYPING',
     SET_ROOM: 'SET_ROOM',
-    UPDATE_NO: 'UPDATE_NO'
+    UPDATE_NO: 'UPDATE_NO',
+    SET_CURRENT_TAB: 'SET_CURRENT_TAB'
 }

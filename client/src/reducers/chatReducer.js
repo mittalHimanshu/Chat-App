@@ -5,19 +5,21 @@ import {
   TYPING,
   UPDATE_NO,
   SET_SOCKET,
-  SET_ROOM
+  SET_ROOM,
+  SET_CURRENT_TAB
 } from '../actions'
 
 const initialState = {
   details: {
     socket: null,
     username: null,
+    currentOpenedTab: 'community',
     connectedUsers: [],
-    newChats: {
-      'community': 0
-    },
     messages: {
-      'community': []
+      'community': {
+        noOfMessages: 0,
+        'chats': []
+      }
     },
     chatRoom: 'community'
   }
@@ -26,9 +28,18 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
 
+    case SET_CURRENT_TAB:
+      return {
+        ...state,
+        details:{
+          ...state.details,
+          currentOpenedTab: action.payload
+        }
+      }
+
     case UPDATE_NO:
       let new_state_1 = { ...state.details }
-      new_state_1['newChats'][action.payload] += 1
+      new_state_1.messages[action.payload].noOfMessages += 1
       return {
         ...state,
         details: {
@@ -40,8 +51,8 @@ export default function (state = initialState, action) {
       let chat_room = action.payload
       let new_state = { ...state.details }
       new_state['chatRoom'] = chat_room
-      new_state.messages[chat_room] = []
-      new_state.newChats[chat_room] = 0
+      new_state.messages[chat_room].noOfMessages = 0
+      new_state.messages[chat_room].chats = []
       return {
         ...state,
         details: {
@@ -62,7 +73,7 @@ export default function (state = initialState, action) {
       var { message, chatRoom } = action.payload
       let newState = { ...state.details }
       if (newState.messages[chatRoom])
-        newState.messages[chatRoom].push(message)
+        newState.messages[chatRoom]['chats'].push(message)
       return {
         ...state
       }

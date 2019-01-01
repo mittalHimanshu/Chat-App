@@ -15,6 +15,7 @@ class ChatWindow extends Component {
       const { connectedUsers } = this.props.details
       this.props.changeConnectedUsers(connectedUsers, username, true)
     })
+    
   }
 
   displayMessages = () => {
@@ -23,7 +24,7 @@ class ChatWindow extends Component {
     var chatMessages
     Object.keys(messages).forEach(key => {
       if (key === chatRoom) {
-        chatMessages = messages[key]
+        chatMessages = messages[key]['chats']
       }
     })
     return (
