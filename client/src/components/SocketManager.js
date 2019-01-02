@@ -43,7 +43,7 @@ class SocketManager extends Component {
         socket.on('USER_TYPING', payload => {
             this.props.changeConnectedUsers(
                 payload.connectedUsers,
-                payload.username
+                payload.username 
             )
         })
 

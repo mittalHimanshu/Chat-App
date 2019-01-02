@@ -23,21 +23,22 @@ module.exports.createUser = username => {
     })
 }
 
-module.exports.deleteUser = users => {
-    users.forEach((username, index, object) => {
-        if (username === user) {
+module.exports.deleteUser = (users, userToDelete, userSockets) => {
+    users.forEach((user, index, object) => {
+        const { username } = user
+        if (username === userToDelete) {
             object.splice(index, 1);
             userSockets.splice(index, 1)
         }
     });
-    return users
+    return { users, userSockets }
 }
 
-module.exports.findUser = (userSockets, users, username) => {
+module.exports.findUser = (userSockets, users, usernameToFind, callback) => {
     users.forEach((user, index, object) => {
-        if (user === username) {
-            return userSockets[index]
+        const { username } = user
+        if (username === usernameToFind) {
+            callback(userSockets[index])
         }
     });
-    return null
 }

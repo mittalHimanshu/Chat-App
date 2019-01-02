@@ -9,7 +9,8 @@ class ChatWindow extends Component {
     
     const { currentOpenedTab } = this.props.details
     const { messages } = this.props.details
-    const chatMessages = messages[`${currentOpenedTab}`]['chats']
+    const choice = messages[currentOpenedTab]
+    const chatMessages = choice ? choice['chats'] : []
     return (
       chatMessages.map(message =>
         <div key={uuid()} className="media text-muted pt-3">

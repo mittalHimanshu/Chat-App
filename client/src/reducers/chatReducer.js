@@ -16,7 +16,7 @@ const initialState = {
     currentOpenedTab: 'community',
     connectedUsers: [],
     messages: {
-      'community': {
+      community: {
         'chats': []
       }
     }

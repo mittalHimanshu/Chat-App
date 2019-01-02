@@ -5,8 +5,8 @@ class Footer extends Component {
 
   submit = e => {
     e.preventDefault()
-    const { socket, username, currentOpenedTab } = this.props.details
-    socket.emit('USER_NOT_TYPING', username)
+    const { socket, username, currentOpenedTab, connectedUsers } = this.props.details
+    socket.emit('USER_NOT_TYPING', { connectedUsers, username })
     const message = this.message.value
     if (currentOpenedTab === 'community') {
       socket.emit('SEND_MESSAGE', {

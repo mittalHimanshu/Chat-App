@@ -24,12 +24,10 @@ module.exports = socket => {
   })
 
   socket.on('USER_TYPING', payload => {
-    console.log(payload)
     io.in('community').emit('USER_TYPING', payload)
   })
 
   socket.on('USER_NOT_TYPING', payload => {
-    console.log(payload)
     io.in('community').emit('USER_NOT_TYPING', payload)
   })
 
@@ -45,20 +43,21 @@ module.exports = socket => {
 
   socket.on('disconnect', () => {
     const { user } = socket
-    users = deleteUser(users)
+    const obj = deleteUser(users, user, userSockets)
+    users = obj.users
+    userSockets = obj.userSockets
     io.in('community').emit('USER_CONNECTED', users)
     io.in('community').emit('SHOW_TOAST', `${user} left the room`)
   })
 
   socket.on('PRIVATE_CHAT', username => {
-    var userSocket = findUser(userSockets, users, username)
-    if (userSocket !== null) {
+    findUser(userSockets, users, username, userSocket => {
       const chatRoomId = getChatRoomId(a = socket.user, b = userSocket.user)
       socket.join(chatRoomId)
       userSocket.join(chatRoomId)
       socket.emit('CREATE_ROOM', userSocket.user)
       socket.to(chatRoomId).emit('CREATE_ROOM', socket.user)
-    }
+    })
   })
 
 }
