@@ -8,7 +8,9 @@ class Sidebar extends Component {
   handlePrivateChat = username => {
     const { socket } = this.props.details
     this.props.setCurrentTab(username)
-    socket.emit('PRIVATE_CHAT', username)
+    const {messages} = this.props.details
+    if(!messages[username])
+      socket.emit('PRIVATE_CHAT', username)
   }
 
   displayNoOfChats = user => {

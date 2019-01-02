@@ -38,7 +38,7 @@ export default function (state = initialState, action) {
     case UPDATE_NO:
       let new_state_1 = { ...state.details }
       new_state_1.connectedUsers.forEach(user => {
-        if(user.username === action.payload){
+        if (user.username === action.payload) {
           user.messageSent += 1
         }
       })

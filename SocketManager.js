@@ -20,6 +20,7 @@ module.exports = socket => {
     const { chatRoom, username } = payload
     socket.emit('RECEIVE_MESSAGE', msg, chatRoom)
     const chatRoomId = getChatRoomId(a = socket.user, b = chatRoom)
+    socket.to(chatRoomId).emit('RECEIVE_MESSAGE', msg, username)
     socket.to(chatRoomId).emit('UPDATE_CHAT', username)
   })
 
