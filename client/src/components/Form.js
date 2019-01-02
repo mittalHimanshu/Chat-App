@@ -1,30 +1,10 @@
 import React, { Component } from 'react';
 import '../Form.css'
 import { connect } from 'react-redux'
-import { connectHandler } from '../handlers'
-import io from 'socket.io-client'
-import { setUser,updateNoOfChats, setConnecedUsers, setSocket,setChatRoom, setMessages } from '../actions/performAction'
-const socketUrl = 'http://localhost:5000'
+import SocketManager from './SocketManager'
+import { setUser, setSocket } from '../actions/performAction'
 
 class Form extends Component {
-
-  componentWillMount() {
-    const socket = io(socketUrl)
-    socket.on('connect', connectHandler)
-    socket.on('RECEIVE_MESSAGE', (message, chatRoom) => {
-      this.props.setMessages(message, chatRoom)
-    })
-    socket.on('USER_CONNECTED', users => {
-      this.props.setConnecedUsers(users)
-    })
-    socket.on('CREATE_ROOM', id => {
-      this.props.setChatRoom(id)
-    })
-    socket.on('UPDATE_CHAT', id => {
-      this.props.updateNoOfChats(id)
-    })
-    this.props.setSocket(socket)
-  }
 
   handleInput = e => {
     this.props.setUser(e.target.value)
@@ -34,22 +14,24 @@ class Form extends Component {
     e.preventDefault()
     const { username } = this.props.details
     const { socket } = this.props.details
-    const user = { username, isTyping: false }
-    socket.emit('USER_CONNECTED', user)
+    socket.emit('USER_CONNECTED', username)
     this.props.history.push('/chat-box')
   }
 
   render() {
     return (
-      <div className="container" style={{ maxWidth: '322px', marginTop: '270px' }}>
-        <div className="card text-white bg-success mb-3">
-          <div className="card-body">
-            <form className="form-inline" onSubmit={this.handleSubmit} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div className="form-group mx-sm-3">
-                <input type="text" onChange={this.handleInput} required autoFocus className="form-control" placeholder="Username" />
-              </div>
-              <button type="submit" className="btn btn-dark" style={{ marginTop: '19px' }}>Submit</button>
-            </form>
+      <div>
+        <SocketManager />
+        <div className="container" style={{ maxWidth: '322px', marginTop: '270px' }}>
+          <div className="card text-white bg-success mb-3">
+            <div className="card-body">
+              <form className="form-inline" onSubmit={this.handleSubmit} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="form-group mx-sm-3">
+                  <input type="text" onChange={this.handleInput} required autoFocus className="form-control" placeholder="Username" />
+                </div>
+                <button type="submit" className="btn btn-dark" style={{ marginTop: '19px' }}>Submit</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -63,4 +45,4 @@ const mapStateToProps = state => (
   }
 )
 
-export default connect(mapStateToProps, { setUser,updateNoOfChats, setConnecedUsers, setChatRoom, setSocket, setMessages })(Form);
+export default connect(mapStateToProps, { setUser, setSocket })(Form);

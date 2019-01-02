@@ -12,13 +12,17 @@ class Sidebar extends Component {
   }
 
   displayNoOfChats = user => {
-    const { noOfMessages } = this.props.details.messages[user] || '0'
     const { currentOpenedTab } = this.props.details
-    const choice = currentOpenedTab === user ? 0 : 1
+    const {username} = this.props.details
+    const choice = (
+      currentOpenedTab === user
+        ||
+      user === username
+     ) ? 0 : 1
     return (
       <div>
       {
-        choice ? noOfMessages : null
+        choice ? user.messagesSent : null
       }
       </div>
     )
@@ -30,7 +34,7 @@ displayCurrentUsers = () => {
     connectedUsers.map(user =>
       <li key={uuid()} onClick={() => this.handlePrivateChat(user.username)} className="nav-item" style={{ alignContent: 'space-around', textAlign: 'left', marginTop: 0 }}>
         <div style={{ float: 'left', marginTop: '15px', marginLeft: '16px', fontSize: '15px' }}>{user.username}</div>
-        {this.displayNoOfChats(user)}
+        {this.displayNoOfChats(user.username)}
         {user.isTyping ?
           <img src="https://mittalhimanshu151.000webhostapp.com/Images/typing.gif" className="mr-2 rounded" width={50} height={50} style={{ float: 'right' }} />
           : null}

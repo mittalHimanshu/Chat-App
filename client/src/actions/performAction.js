@@ -53,19 +53,10 @@ export const setSocket = payload => {
     }
 }
 
-export const setConnecedUsers = users => {
-    var conUsers = []
-    users.map(user=>{
-        const {username} = user
-        conUsers.push({
-            username,
-            isTyping: false,
-            noOfChats: 0
-        })
-    })
+export const setConnecedUsers = payload => {
     return{
         type: SET_CONNECTED_USERS,
-        payload: conUsers
+        payload
     }
 }
 

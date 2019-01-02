@@ -17,11 +17,9 @@ const initialState = {
     connectedUsers: [],
     messages: {
       'community': {
-        noOfMessages: 0,
         'chats': []
       }
-    },
-    chatRoom: 'community'
+    }
   }
 }
 
@@ -31,7 +29,7 @@ export default function (state = initialState, action) {
     case SET_CURRENT_TAB:
       return {
         ...state,
-        details:{
+        details: {
           ...state.details,
           currentOpenedTab: action.payload
         }
@@ -39,7 +37,11 @@ export default function (state = initialState, action) {
 
     case UPDATE_NO:
       let new_state_1 = { ...state.details }
-      new_state_1.messages[action.payload].noOfMessages += 1
+      new_state_1.connectedUsers.forEach(user => {
+        if(user.username === action.payload){
+          user.messageSent += 1
+        }
+      })
       return {
         ...state,
         details: {
@@ -50,9 +52,8 @@ export default function (state = initialState, action) {
     case SET_ROOM:
       let chat_room = action.payload
       let new_state = { ...state.details }
-      new_state['chatRoom'] = chat_room
-      new_state.messages[chat_room].noOfMessages = 0
-      new_state.messages[chat_room].chats = []
+      new_state.messages[`${chat_room}`] = {}
+      new_state.messages[`${chat_room}`]['chats'] = []
       return {
         ...state,
         details: {
@@ -72,10 +73,12 @@ export default function (state = initialState, action) {
     case GET_MESSAGE:
       var { message, chatRoom } = action.payload
       let newState = { ...state.details }
-      if (newState.messages[chatRoom])
-        newState.messages[chatRoom]['chats'].push(message)
+      newState.messages[chatRoom]['chats'].push(message)
       return {
-        ...state
+        ...state,
+        details: {
+          ...newState
+        }
       }
 
     case SET_SOCKET:

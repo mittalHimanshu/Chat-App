@@ -5,28 +5,11 @@ import { changeConnectedUsers } from '../actions/performAction'
 
 class ChatWindow extends Component {
 
-  componentWillMount() {
-    const { socket } = this.props.details
-    socket.on('USER_TYPING', username => {
-      const { connectedUsers } = this.props.details
-      this.props.changeConnectedUsers(connectedUsers, username)
-    })
-    socket.on('USER_NOT_TYPING', username => {
-      const { connectedUsers } = this.props.details
-      this.props.changeConnectedUsers(connectedUsers, username, true)
-    })
-    
-  }
-
   displayMessages = () => {
-    const { chatRoom } = this.props.details
+    
+    const { currentOpenedTab } = this.props.details
     const { messages } = this.props.details
-    var chatMessages
-    Object.keys(messages).forEach(key => {
-      if (key === chatRoom) {
-        chatMessages = messages[key]['chats']
-      }
-    })
+    const chatMessages = messages[`${currentOpenedTab}`]['chats']
     return (
       chatMessages.map(message =>
         <div key={uuid()} className="media text-muted pt-3">
@@ -43,9 +26,8 @@ class ChatWindow extends Component {
         </div>
       )
     )
+
   }
-
-
 
   render() {
     return (

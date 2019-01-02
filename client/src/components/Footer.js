@@ -5,23 +5,28 @@ class Footer extends Component {
 
   submit = e => {
     e.preventDefault()
-    const message = this.message.value
-    const { socket } = this.props.details
-    const { username } = this.props.details
-    const {chatRoom} = this.props.details
-    socket.emit('SEND_MESSAGE', [{
-      username, message
-    }, chatRoom])
+    const { socket, username, currentOpenedTab } = this.props.details
     socket.emit('USER_NOT_TYPING', username)
+    const message = this.message.value
+    if (currentOpenedTab === 'community') {
+      socket.emit('SEND_MESSAGE', {
+        username, message, chatRoom: currentOpenedTab
+      })
+    }
+    else {
+      socket.emit('SEND_PRIVATE_MESSAGE', {
+        username, message, chatRoom: currentOpenedTab
+      })
+    }
     this.message.value = ''
   }
 
   handleTyping = e => {
-    const { socket, username } = this.props.details
+    const { socket, username, connectedUsers } = this.props.details
     if (e.target.value)
-      socket.emit('USER_TYPING', username)
+      socket.emit('USER_TYPING', { connectedUsers, username })
     else
-      socket.emit('USER_NOT_TYPING', username)
+      socket.emit('USER_NOT_TYPING', { connectedUsers, username })
   }
 
   handleSubmit = e => {
