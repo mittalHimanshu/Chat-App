@@ -12,7 +12,9 @@ app.get('*', (req, res) => {
     res.sendFile(url)
 })
 
-const server = app.listen(5000, console.log('Server Started'))
+const port = process.env.PORT || 5000
+
+const server = app.listen(port, console.log('Server Started'))
 
 const io = module.exports = socket(server)
 const SocketManager = require('./SocketManager')
