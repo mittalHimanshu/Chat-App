@@ -11,14 +11,14 @@ A Full Stack app which uses Node.js, Express.js, React, Redux and Socket.io
 Client-side | Server-side
 --- | ---
 react: ^16.7.0 | express: ^4.16.4
-react-dom: ^16.7.0" | moment: ^2.23.0
-react-redux: ^6.0.0" | socket.io: ^2.2.0
-react-router-dom: ^4.3.1" |
-react-scripts: ^2.1.2" |
-react-toastify: ^4.5.1" |
-redux: ^4.0.1" |
-redux-thunk: ^2.3.0" |
-uuid: ^3.3.2" |
+react-dom: ^16.7.0 | moment: ^2.23.0
+react-redux: ^6.0.0 | socket.io: ^2.2.0
+react-router-dom: ^4.3.1 |
+react-scripts: ^2.1.2 |
+react-toastify: ^4.5.1 |
+redux: ^4.0.1 |
+redux-thunk: ^2.3.0 |
+uuid: ^3.3.2 |
 
 ## Screenshots
 
