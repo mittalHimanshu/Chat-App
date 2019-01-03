@@ -2,10 +2,14 @@ import React, { Component } from 'react';
 import '../Form.css'
 import { connect } from 'react-redux'
 import SocketManager from './SocketManager'
-import { setUser, setSocket } from '../actions/performAction'
+import { setUser, setSocket, resetState } from '../actions/performAction'
 import { withRouter } from 'react-router-dom'
 
 class Form extends Component {
+
+  componentWillMount() {
+    this.props.resetState()
+  }
 
   handleInput = e => {
     this.props.setUser(e.target.value)
@@ -46,4 +50,4 @@ const mapStateToProps = state => (
   }
 )
 
-export default withRouter(connect(mapStateToProps, { setUser, setSocket })(Form))
+export default withRouter(connect(mapStateToProps, { setUser, setSocket, resetState })(Form))

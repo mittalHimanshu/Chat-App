@@ -8,7 +8,8 @@ import {
   SET_SOCKET,
   SET_ROOM,
   SET_CURRENT_TAB,
-  RESET_MESSAGES_SENT
+  RESET_MESSAGES_SENT,
+  RESET_STATE
 } from '../actions'
 
 const initialState = {
@@ -28,8 +29,21 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
 
+    case RESET_STATE:
+      return {
+        ...state,
+        details:{
+          ...initialState.details,
+          messages: {
+            community: {
+              'chats': []
+            }
+          }
+        }
+      }
+
     case RESET_MESSAGES_SENT:
-    let new_state_3 = { ...state.details }
+      let new_state_3 = { ...state.details }
       new_state_3.connectedUsers.forEach(user => {
         if (user.username === action.payload) {
           user.messagesSent = 0

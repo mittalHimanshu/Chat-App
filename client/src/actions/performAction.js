@@ -8,13 +8,20 @@ import {
   SET_ROOM,
   UPDATE_NO,
   SET_CURRENT_TAB,
-  RESET_MESSAGES_SENT
+  RESET_MESSAGES_SENT,
+  RESET_STATE
 } from './index'
 
 export const setUser = payload => {
   return {
     type: GET_USER,
     payload
+  }
+}
+
+export const resetState = () => {
+  return {
+    type: RESET_STATE
   }
 }
 
