@@ -14,13 +14,18 @@ import {
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
 
-const socketUrl = 'http://localhost:5000'
+
+// Uncomment in development when testing on localhost
+// const socketUrl = 'http://localhost:5000'
+
 
 class SocketManager extends Component {
 
     componentWillMount() {
 
-        const socket = io(socketUrl)
+        // Uncomment in development when testing on localhost
+        // const socket = io(socketUrl)
+        const socket = io.connect()
         this.props.setSocket(socket)
 
         socket.on('connect', () => {
