@@ -91,7 +91,7 @@ export const setConnecedUsers = payload => {
 
 export const changeConnectedUsers = (username, extra = false) => (dispatch, getState) => {
   const { connectedUsers } = getState().details.details
-  connectedUsers.map(user => {
+  connectedUsers.forEach(user => {
     if (user.username === username)
       if (extra === false)
         user.isTyping = true

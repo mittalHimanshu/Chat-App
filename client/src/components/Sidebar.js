@@ -29,19 +29,23 @@ class Sidebar extends Component {
 
 
   displayCurrentUsers = () => {
-    const { connectedUsers } = this.props.details
+    const { connectedUsers, username } = this.props.details
     return (
-      connectedUsers.map(user =>
-        <a key={uuid()} className="nav-link" style={{ marginTop: '-8px' }}>
-          <li className="nav-item" onClick={() => this.handlePrivateChat(user.username)} style={{ alignContent: 'space-around', textAlign: 'left' }}>
-            <div style={{ float: 'left', fontSize: '18px', fontFamily: 'Andika' }}>{user.username}</div>
-            {this.displayNoOfChats(user)}
-            {user.isTyping ?
-              <img src="https://mittalhimanshu151.000webhostapp.com/Images/typing.gif" className="rounded d-none d-sm-block" width={35} style={{ float: 'right' }} height={35} />
-              : null}
-          </li>
-        </a>
-      )
+      connectedUsers.map(user => {
+        if (user.username !== username) {
+          return (
+            <a key={uuid()} className="nav-link" href='/' onClick={e => e.preventDefault()} style={{ marginTop: '-8px' }}>
+              <li className="nav-item" onClick={() => this.handlePrivateChat(user.username)} style={{ alignContent: 'space-around', textAlign: 'left' }}>
+                <div style={{ float: 'left', fontSize: '18px', fontFamily: 'Andika' }}>{user.username}</div>
+                {this.displayNoOfChats(user)}
+                {user.isTyping ?
+                  <img src="https://mittalhimanshu151.000webhostapp.com/Images/typing.gif" alt='' className="rounded d-none d-sm-block" width={35} style={{ float: 'right' }} height={35} />
+                  : null}
+              </li>
+            </a>
+          )
+        }
+      })
     )
   }
 
@@ -61,7 +65,7 @@ class Sidebar extends Component {
             </li>
             <li key={uuid()} onClick={() => this.handlePrivateChat('community')} className="nav-item" style={{ marginTop: '-17px' }}>
               <div className="row">
-                <a className="nav-link active col-sm-12 col-12 ml-2 ml-sm-2" href="#" style={{ fontSize: '18px' }}>
+                <a href='/' onClick={e => e.preventDefault()} className="nav-link active col-sm-12 col-12 ml-2 ml-sm-2" style={{ fontSize: '18px' }}>
                   <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="feather feather-home d-none d-sm-inline" style={{ marginBottom: '3px' }}>
                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
                     <polyline points="9 22 9 12 15 12 15 22" />

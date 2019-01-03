@@ -14,7 +14,7 @@ class ChatWindow extends Component {
     return (
       chatMessages.map(message =>
         <div key={uuid()} className="media text-muted pt-3">
-          <img src="http://pinegrow.com/placeholders/img15.jpg" alt className="mr-2 rounded" width={32} height={32} />
+          <img src="http://pinegrow.com/placeholders/img15.jpg" alt='' className="mr-2 rounded" width={32} height={32} />
           <p className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
             <strong className="d-block text-gray-dark">
               {message.username}

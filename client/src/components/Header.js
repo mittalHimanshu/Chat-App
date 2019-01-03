@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class Header extends Component {
 
@@ -12,10 +12,10 @@ class Header extends Component {
       <nav className="navbar navbar-dark bg-dark sticky-top p-auto">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
-            <a className="nav-link" href="#">{this.props.username}</a>
+            <a href='/' onClick={e => e.preventDefault()} className="nav-link">{this.props.username}</a>
           </li>
         </ul>
-          <Link to='/'><button className="btn my-2 my-sm-0 btn-outline-warning" onClick={this.handleLogout} type="button">Leave Room</button></Link>
+        <Link to='/'><button className="btn my-2 my-sm-0 btn-outline-warning" onClick={this.handleLogout} type="button">Leave Room</button></Link>
       </nav>
     );
   }

@@ -39,7 +39,7 @@ module.exports = socket => {
     users.push(user)
     userSockets.push(socket)
     io.in('community').emit('USER_CONNECTED', users)
-    io.in('community').emit('SHOW_TOAST', `${username} entered the room`)
+    socket.to('community').emit('SHOW_TOAST', `${username} entered the room`)
   })
 
   socket.on('disconnect', () => {
@@ -50,7 +50,7 @@ module.exports = socket => {
     io.in('community').emit('USER_CONNECTED', users)
     io.in('community').emit('UPDATE_VIEW', user)
     io.in('community').emit('DELETE_USER_INFO', user)
-    io.in('community').emit('SHOW_TOAST', `${user} left the room`)
+    socket.to('community').emit('SHOW_TOAST', `${user} left the room`)
   })
 
   socket.on('PRIVATE_CHAT', username => {
