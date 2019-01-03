@@ -4,7 +4,7 @@ A Full Stack app which uses Node.js, Express.js, React, Redux and Socket.io
 
 ## Link
 
-<a href='https://murmuring-tundra-77993.herokuapp.com'> Click Here </a>
+<a href='https://murmuring-tundra-77993.herokuapp.com'> Click Here to start chatting </a>
 
 ## Dependencies(tech-stacks)
 
@@ -23,9 +23,11 @@ uuid: ^3.3.2" |
 ## Screenshots
 
 User enters Username
+
 ![User enters Username](https://mittalhimanshu151.000webhostapp.com/Images/Chat-App/1.PNG)
 
 Users can now start chatting
+
 ![Users can now start chatting](https://mittalhimanshu151.000webhostapp.com/Images/Chat-App/2.png)
 
 ## License
