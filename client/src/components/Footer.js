@@ -5,8 +5,8 @@ class Footer extends Component {
 
   submit = e => {
     e.preventDefault()
-    const { socket, username, currentOpenedTab, connectedUsers } = this.props.details
-    socket.emit('USER_NOT_TYPING', { connectedUsers, username })
+    const { socket, username, currentOpenedTab } = this.props.details
+    socket.emit('USER_NOT_TYPING', { username })
     const message = this.message.value
     if (currentOpenedTab === 'community') {
       socket.emit('SEND_MESSAGE', {
@@ -22,11 +22,11 @@ class Footer extends Component {
   }
 
   handleTyping = e => {
-    const { socket, username, connectedUsers } = this.props.details
+    const { socket, username } = this.props.details
     if (e.target.value)
-      socket.emit('USER_TYPING', { connectedUsers, username })
+      socket.emit('USER_TYPING', { username })
     else
-      socket.emit('USER_NOT_TYPING', { connectedUsers, username })
+      socket.emit('USER_NOT_TYPING', { username })
   }
 
   handleSubmit = e => {
@@ -38,11 +38,11 @@ class Footer extends Component {
   render() {
     return (
       <div className="row">
-        <footer className="footer col-sm-12 col-lg-10 col-md-10 col-12" style={{ position: 'fixed', bottom: 0, right: 0, backgroundColor: '#f8f9fa', padding: '10px' }}>
+        <footer className="footer col-lg-9 col-md-9 col-sm-9 col-9 col-xl-10" style={{ position: 'fixed', bottom: 0, right: 0, backgroundColor: '#f8f9fa', padding: '10px' }}>
           <div className="container">
             <span className="text-muted">
               <div className="row">
-                <input autoFocus onKeyPress={this.handleSubmit} onChange={this.handleTyping} ref={(input) => { this.message = input }} type="text" className="form-control col-lg-10 col-xl-10 col-md-10 col-sm-10 col-10" placeholder="Type Here......." />
+                <input autoFocus onKeyPress={this.handleSubmit} onChange={this.handleTyping} ref={(input) => { this.message = input }} type="text" placeholder="Type Here......." className="form-control col-xl-10 col-md-10 col-lg-10 col-8 col-sm-9" />
                 <button onClick={this.submit} className="btn btn-info float-right col-lg col-md col-sm col" type="submit" style={{ marginLeft: '15px' }}>Send</button>
               </div>
             </span>

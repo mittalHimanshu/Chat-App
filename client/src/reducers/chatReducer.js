@@ -4,9 +4,11 @@ import {
   GET_MESSAGE,
   TYPING,
   UPDATE_NO,
+  DELETE_USER_INFO,
   SET_SOCKET,
   SET_ROOM,
-  SET_CURRENT_TAB
+  SET_CURRENT_TAB,
+  RESET_MESSAGES_SENT
 } from '../actions'
 
 const initialState = {
@@ -26,6 +28,32 @@ const initialState = {
 export default function (state = initialState, action) {
   switch (action.type) {
 
+    case RESET_MESSAGES_SENT:
+    let new_state_3 = { ...state.details }
+      new_state_3.connectedUsers.forEach(user => {
+        if (user.username === action.payload) {
+          user.messagesSent = 0
+        }
+      })
+      return {
+        ...state,
+        details: {
+          ...new_state_3
+        }
+      }
+
+    case DELETE_USER_INFO:
+      let new_state_2 = { ...state.details }
+      if (new_state_2.messages[`${action.payload}`]) {
+        delete new_state_2.messages[`${action.payload}`]
+      }
+      return {
+        ...state,
+        details: {
+          ...new_state_2
+        }
+      }
+
     case SET_CURRENT_TAB:
       return {
         ...state,
@@ -39,7 +67,7 @@ export default function (state = initialState, action) {
       let new_state_1 = { ...state.details }
       new_state_1.connectedUsers.forEach(user => {
         if (user.username === action.payload) {
-          user.messageSent += 1
+          user.messagesSent += 1
         }
       })
       return {

@@ -48,6 +48,8 @@ module.exports = socket => {
     users = obj.users
     userSockets = obj.userSockets
     io.in('community').emit('USER_CONNECTED', users)
+    io.in('community').emit('UPDATE_VIEW', user)
+    io.in('community').emit('DELETE_USER_INFO', user)
     io.in('community').emit('SHOW_TOAST', `${user} left the room`)
   })
 

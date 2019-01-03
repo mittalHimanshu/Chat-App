@@ -2,16 +2,42 @@ import {
   SET_CONNECTED_USERS,
   TYPING,
   GET_USER,
+  DELETE_USER_INFO,
   GET_MESSAGE,
   SET_SOCKET,
   SET_ROOM,
   UPDATE_NO,
-  SET_CURRENT_TAB
+  SET_CURRENT_TAB,
+  RESET_MESSAGES_SENT
 } from './index'
 
 export const setUser = payload => {
   return {
     type: GET_USER,
+    payload
+  }
+}
+
+export const resetMessagesSent = payload => {
+  return {
+    type: RESET_MESSAGES_SENT,
+    payload
+  }
+}
+
+export const updateView = payload => (dispatch, getState) => {
+  const { currentOpenedTab } = getState().details.details
+  if (currentOpenedTab === payload) {
+    dispatch({
+      type: SET_CURRENT_TAB,
+      payload: 'community'
+    })
+  }
+}
+
+export const deleteUserInfo = payload => {
+  return {
+    type: DELETE_USER_INFO,
     payload
   }
 }
@@ -23,10 +49,13 @@ export const setCurrentTab = payload => {
   }
 }
 
-export const updateNoOfChats = payload => {
-  return {
-    type: UPDATE_NO,
-    payload
+export const updateNoOfChats = payload => (dispatch, getState) => {
+  const { currentOpenedTab } = getState().details.details
+  if (currentOpenedTab !== payload) {
+    dispatch({
+      type: UPDATE_NO,
+      payload
+    })
   }
 }
 
@@ -60,7 +89,8 @@ export const setConnecedUsers = payload => {
   }
 }
 
-export const changeConnectedUsers = (connectedUsers, username, extra = false) => {
+export const changeConnectedUsers = (username, extra = false) => (dispatch, getState) => {
+  const { connectedUsers } = getState().details.details
   connectedUsers.map(user => {
     if (user.username === username)
       if (extra === false)
@@ -68,8 +98,8 @@ export const changeConnectedUsers = (connectedUsers, username, extra = false) =>
       else
         user.isTyping = false
   })
-  return {
+  dispatch({
     type: TYPING,
     payload: connectedUsers
-  }
+  })
 }

@@ -9,7 +9,7 @@ class Header extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg sticky-top">
+      <nav className="navbar navbar-dark bg-dark sticky-top p-auto">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item active">
             <a className="nav-link" href="#">{this.props.username}</a>

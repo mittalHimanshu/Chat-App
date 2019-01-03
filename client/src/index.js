@@ -12,7 +12,7 @@ ReactDOM.render(
     <BrowserRouter>
         <Provider store={store}>
             <Switch>
-                <Route exact path='/' component={Form} />
+                <Route exact path='/' component={()=><Form/>} />
                 <Route exact path='/chat-box' component={App} />
             </Switch>
         </Provider>

@@ -6,7 +6,10 @@ import {
     changeConnectedUsers,
     setSocket,
     setChatRoom,
-    setMessages
+    setMessages,
+    deleteUserInfo,
+    setCurrentTab,
+    updateView
 } from '../actions/performAction'
 import { connect } from 'react-redux'
 import io from 'socket.io-client'
@@ -24,8 +27,16 @@ class SocketManager extends Component {
             console.log('Client Connected')
         })
 
+        socket.on('UPDATE_VIEW', user => {
+            this.props.updateView(user)
+        })
+
         socket.on('RECEIVE_MESSAGE', (message, chatRoom) => {
             this.props.setMessages(message, chatRoom)
+        })
+
+        socket.on('DELETE_USER_INFO', user => {
+            this.props.deleteUserInfo(user)
         })
 
         socket.on('USER_CONNECTED', users => {
@@ -42,18 +53,17 @@ class SocketManager extends Component {
 
         socket.on('USER_TYPING', payload => {
             this.props.changeConnectedUsers(
-                payload.connectedUsers,
                 payload.username 
             )
         })
 
         socket.on('USER_NOT_TYPING', payload => {
             this.props.changeConnectedUsers(
-                payload.connectedUsers,
                 payload.username,
                 true
             )
         })
+
     }
 
     render() {
@@ -76,5 +86,8 @@ export default connect(mapStateToProps, {
     setConnecedUsers,
     setSocket,
     setChatRoom,
-    setMessages
+    setMessages,
+    deleteUserInfo,
+    setCurrentTab,
+    updateView
 })(SocketManager)
